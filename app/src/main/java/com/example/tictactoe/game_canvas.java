@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import java.util.*;
 
 import androidx.annotation.Nullable;
 
@@ -14,9 +15,9 @@ import androidx.annotation.Nullable;
 public class game_canvas extends View {
 
     private int cellWidth, cellHeight;
-    private Game g;
     private int x,y;
     private int touchCheck = 0;
+    private String X_O ;
     private boolean[][] cellChecked;
     private Paint  black_paint,red_paint, yellow_paint;
     Game activity;
@@ -46,6 +47,13 @@ public class game_canvas extends View {
 
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        calculateDimensions();
+    }
+
     public void setActivity(Game a)
     {
         activity = a;
@@ -60,9 +68,17 @@ public class game_canvas extends View {
 
         invalidate();
     }
+
+    public void set_X_O(String X_O)
+    {
+        this.X_O = X_O;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //calculateDimensions();
+
 
         black_paint = new Paint();
         red_paint = new Paint();
@@ -78,11 +94,10 @@ public class game_canvas extends View {
             for (int j = 0; j < 3; j++) {
 
                 if (cellChecked[i][j])
-                    if(touchCheck !=0 && touchCheck %2==0)
+                    if(X_O.equals("X"))
                         canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
-                    else
-                    canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);
-
+                    else if(X_O.equals("O"))
+                        canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);
             }
         }
 
@@ -92,7 +107,7 @@ public class game_canvas extends View {
 
     public void drawGrid(Canvas canvas)
     {
-        calculateDimensions();
+
 
         //vertical lines
         for (int i = 1; i < 3; i++) {
@@ -136,7 +151,7 @@ public class game_canvas extends View {
             int column = (int)(event.getX() / cellWidth);
             int row = (int)(event.getY() / cellHeight);
             touchCheck++;
-            cellChecked[column][row] = true;
+            cellChecked[column][row] = !cellChecked[column][row];
             invalidate();
         }
         return true;
