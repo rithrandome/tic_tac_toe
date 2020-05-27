@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import java.util.*;
 
 import androidx.annotation.Nullable;
 
@@ -18,8 +17,11 @@ public class game_canvas extends View {
     private int x,y;
     private int touchCheck = 0;
     private String X_O ;
+    private String[][] board;
     private boolean[][] cellChecked;
-    private Paint  black_paint,red_paint, yellow_paint;
+    private Paint black_paint = new Paint();
+    private Paint red_paint = new Paint();
+    private Paint yellow_paint = new Paint();
     Game activity;
     
     public game_canvas(Context context) {
@@ -65,6 +67,7 @@ public class game_canvas extends View {
         cellHeight = getWidth() / 3;
 
         cellChecked = new boolean[3][3];
+        board = new String[3][3];
 
         invalidate();
     }
@@ -79,11 +82,6 @@ public class game_canvas extends View {
         super.onDraw(canvas);
         //calculateDimensions();
 
-
-        black_paint = new Paint();
-        red_paint = new Paint();
-        yellow_paint = new Paint();
-
         black_paint.setColor(Color.BLACK);
         yellow_paint.setColor(Color.YELLOW);
         red_paint.setColor(Color.parseColor("#D83A40"));
@@ -93,16 +91,10 @@ public class game_canvas extends View {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                if (cellChecked[i][j])
-                    if(X_O.equals("X"))
-                        canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
-<<<<<<< HEAD
-                    else
-                    canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);
-=======
-                    else if(X_O.equals("O"))
+                if (board[i][j].equals("X"))
+                    canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
+                else if(board[i][j].equals("O"))
                         canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);
->>>>>>> 0b7311b751f43bd03d0d418c6830283068267c27
             }
         }
 
@@ -156,18 +148,43 @@ public class game_canvas extends View {
             int column = (int)(event.getX() / cellWidth);
             int row = (int)(event.getY() / cellHeight);
             touchCheck++;
-            cellChecked[column][row] = !cellChecked[column][row];
+            cellChecked[column][row] = true;
+            board[column][row] = X_O;
+            activity.set_game(find_cell(column,row));
             invalidate();
         }
         return true;
     }
 
-//    public Boolean find_cell(float startx,float starty,float stopx)
-//    {
-//        if(x > startx && x < stopx && y > starty && y < starty + cellHeight)
-//        {
-//            return true;
-//        }
-//        return false;
-//    }
+    public int find_cell(int c,int r)
+    {
+       if(c + r == 1)
+       {
+           if(c > r)
+               return 2;
+           else if(c < r)
+               return 4;
+       }
+       else if(c + r == 2)
+        {
+            if(c > r)
+                return 3;
+            else if(c < r)
+                return 7;
+            else if(c == r)
+                return 5;
+        }
+       else if(c + r == 3)
+       {
+           if(c > r)
+               return 6;
+           else if(c < r)
+               return 8;
+       }
+       else if(c + r == 4)
+           return 9;
+       else if(c + r == 0)
+           return 1;
+       return 0;
+    }
 }
