@@ -41,15 +41,16 @@ public class Game extends AppCompatActivity {
     Hashtable<Integer,String> d = new Hashtable<Integer, String>() {{
         put(1,n1);put(2,n2);put(3,n3);put(4,n4);put(5,n5);put(6,n6);put(7,n7);put(8,n8);put(9,n9);
     }};
+    private game_canvas g;
     private int i=0;
     private int game;
     private String p="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        g.setActivity(this);
         game_canvas gameCanvas = new game_canvas(this);
         setContentView(R.layout.activity_main);
-
         winner = findViewById(R.id.winner);
 
     }
@@ -115,6 +116,7 @@ public class Game extends AppCompatActivity {
     }
 
     public void place_marker(Hashtable<Integer,String> d, List<String> marker,String p, int i,int pos) {
+        g.set_X_O(p);
         if(p.equals("X"))
 //            d[pos] = marker[i + 1];
             d.replace(pos,marker.get(i+1));
