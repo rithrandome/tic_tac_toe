@@ -8,22 +8,28 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Arrays;
+
 import androidx.annotation.Nullable;
 
 
 public class game_canvas extends View {
 
     private int cellWidth, cellHeight;
-    private String[][] board;
-    private boolean[][] cellChecked;
+    private String[][] board = new String[3][3];
+
+    private boolean[][] cellChecked = new boolean[3][3];
     private Paint black_paint = new Paint();
     private Paint red_paint = new Paint();
     private Paint yellow_paint = new Paint();
     private Game a;
     private gameEngine ge;
 
+
     public game_canvas(Context context) {
         super(context);
+
+        Arrays.fill(board,null);
 
         init(null);
     }
@@ -69,9 +75,6 @@ public class game_canvas extends View {
 
         cellWidth = getWidth() / 3;
         cellHeight = getWidth() / 3;
-
-        cellChecked = new boolean[3][3];
-        board = new String[3][3];
 
         invalidate();
     }
@@ -122,7 +125,7 @@ public class game_canvas extends View {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                if (board[i][j].equals("X"))
+                if (board[i][j].equals("X") && board[i][j]!= null)
                     canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
                 else if(board[i][j].equals("O"))
                     canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);
