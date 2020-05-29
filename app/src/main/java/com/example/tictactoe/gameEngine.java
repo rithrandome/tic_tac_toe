@@ -30,15 +30,12 @@ public class gameEngine {
     Hashtable<Integer,String> d = new Hashtable<Integer, String>() {{
         put(1,n1);put(2,n2);put(3,n3);put(4,n4);put(5,n5);put(6,n6);put(7,n7);put(8,n8);put(9,n9);
     }};
-    //private int game;
     private String p="X";
 
-//    public void set_game(int game)
-//    {
-//        this.game = game;
-//    }
 
-    public String getP(){return this.p;}
+    String getP(){return this.p;}
+
+    public void setP(String p){this.p = p;}
 
     List<Integer> getP1(){return this.p1;}
     List<Integer> getP2(){return this.p2;}
@@ -77,12 +74,16 @@ public class gameEngine {
     }
 
     private void place_marker(Hashtable<Integer, String> d, List<String> marker, String p, int i, int pos) {
-        if(p.equals("X"))
+        if(p.equals("X")) {
 //            d[pos] = marker[i + 1];
-            d.replace(pos,marker.get(i+1));
-        else if(p.equals("O"))
+            d.replace(pos, marker.get(i + 1));
+            setP(d.get(pos));
+        }
+        else if(p.equals("O")) {
 //            d[pos] = marker[i];
-            d.replace(pos,marker.get(i));
+            d.replace(pos, marker.get(i));
+            setP(d.get(pos));
+        }
     }
 
     int endGame(List<Integer> game_list, List<Integer> p1, List<Integer> p2) {

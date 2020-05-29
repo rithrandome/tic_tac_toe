@@ -53,9 +53,9 @@ public class Game extends AppCompatActivity {
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 Intent i = new Intent(Game.this,Main_menu.class);
-                startActivity(i);
+                startActivity(i);                alertDialog.dismiss();
+
                 finish();
             }
         });
