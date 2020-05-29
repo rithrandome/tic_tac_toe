@@ -14,8 +14,6 @@ import androidx.annotation.Nullable;
 public class game_canvas extends View {
 
     private int cellWidth, cellHeight;
-    private int x,y;
-    private String X_O ;
     private String[][] board;
     private boolean[][] cellChecked;
     private Paint black_paint = new Paint();
@@ -77,11 +75,7 @@ public class game_canvas extends View {
 
         invalidate();
     }
-//
-//    public void set_X_O(String X_O)
-//    {
-//        this.X_O = X_O;
-//    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -138,18 +132,21 @@ public class game_canvas extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.x = (int)event.getX();
-        this.y = (int)event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             int column = (int)(event.getX() / cellWidth);
             int row = (int)(event.getY() / cellHeight);
-            cellChecked[column][row] = true;
-            board[column][row] = ge.getP();
+            if(!cellChecked[column][row]) {
+                cellChecked[column][row] = true;
+                board[column][row] = ge.getP();
 
-            ge.startGame(find_cell(column,row));
-            invalidate();
+                ge.startGame(find_cell(column,row));
+                invalidate();
 
-            a.endGame(ge.endGame(ge.getGame_list(),ge.getP1(),ge.getP2()));
+                a.endGame(ge.endGame(ge.getGame_list(),ge.getP1(),ge.getP2()));
+            }
+            else
+                assert true;
+
         }
         return super.onTouchEvent(event);
     }

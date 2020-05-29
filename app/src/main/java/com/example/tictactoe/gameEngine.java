@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class gameEngine {
 
-    private int i;
+    private int i = 0;
     private List<Integer> p1 = new ArrayList<>();
     private List<Integer> p2 = new ArrayList<>();
     private List<Integer> game_list = new ArrayList<>();
@@ -44,35 +44,19 @@ public class gameEngine {
     List<Integer> getP2(){return this.p2;}
     List<Integer> getGame_list(){return this.game_list;}
 
-    public void startGame(int game)
+    void startGame(int game)
     {
-        while(i<9) {
-
-//            if game not in range (1, 10){
-//                print("Invalid position");
-//                continue;
-//            }
-//            if game in game_list {
-//                print('Already filled!!');
-//                continue;
-//            }
-//            else
+        if(i <= 4) {
             game_list.add(game);
 
-            if(i % 2 == 0) {
+            if (i % 2 == 0) {
                 p1.add(game);
-            }
-            else {
+            } else {
                 p2.add(game);
             }
             place_marker(d, marker, p, i, game);
 
             i += 1;
-            if(i > 4){
-                //if(winner(game_list, p1, p2))
-                break;
-            }
-
         }
     }
 
@@ -103,14 +87,13 @@ public class gameEngine {
             put(7, numbers[7] = new ArrayList<>(Arrays.asList(7, 8, 9)));
         }};
 
-        for (int j = 0; j<8; j++) {
+        for ( int j = 0; j < 8; j++ ) {
             if (p1.containsAll(Objects.requireNonNull(win.get(j)))) {
                 return 1;
             }
             else if(p2.containsAll(Objects.requireNonNull(win.get(j)))) {
                 return 2;
             }
-
             else
                 return 0;
         }

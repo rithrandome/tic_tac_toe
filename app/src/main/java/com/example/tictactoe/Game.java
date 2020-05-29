@@ -25,7 +25,7 @@ public class Game extends AppCompatActivity {
 
     private game_canvas g;
     private gameEngine gameEngine;
-    private int game;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +36,6 @@ public class Game extends AppCompatActivity {
         gameEngine = new gameEngine();
         g.setGameEngine(gameEngine);
         g.setGame(this);
-//        gameEngine.startGame(this.game);
-//        endGame(gameEngine.endGame(gameEngine.getGame_list(),gameEngine.getP1(),gameEngine.getP2()));
     }
 
     private void showAlertDialog(int layout){
@@ -49,6 +47,8 @@ public class Game extends AppCompatActivity {
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,11 +61,7 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    public void set_game(int game)
-    {
-        this.game = game;
-    }
-
+    @SuppressLint("SetTextI18n")
     public void endGame(int winner)
     {
         if(winner == 1)
@@ -80,16 +76,9 @@ public class Game extends AppCompatActivity {
         {
             this.winner.setText("It's a Draw !!");
         }
-
         showAlertDialog(R.layout.winner_dialog);
     }
 
-
-
-//    public Boolean issubset(){
-//
-//
-//    }
 
 
 }
