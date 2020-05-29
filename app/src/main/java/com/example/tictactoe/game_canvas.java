@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -74,11 +73,7 @@ public class game_canvas extends View {
         cellHeight = getWidth() / 3;
 
     }
-//
-//    public void set_X_O(String X_O)
-//    {
-//        this.X_O = X_O;
-//    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -124,7 +119,6 @@ public class game_canvas extends View {
     {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-
                 if (board[i][j].equals("X"))
                     canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
                 else if(board[i][j].equals("O"))
@@ -137,18 +131,21 @@ public class game_canvas extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.x = (int)event.getX();
-        this.y = (int)event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             int column = (int)(event.getX() / cellWidth);
             int row = (int)(event.getY() / cellHeight);
-            cellChecked[column][row] = true;
-            board[column][row] = ge.getP();
+            if(!cellChecked[column][row]) {
+                cellChecked[column][row] = true;
+                board[column][row] = ge.getP();
 
-            ge.startGame(find_cell(column,row));
-            invalidate();
+                ge.startGame(find_cell(column,row));
+                invalidate();
 
-            a.endGame(ge.endGame(ge.getGame_list(),ge.getP1(),ge.getP2()));
+                a.endGame(ge.endGame(ge.getGame_list(),ge.getP1(),ge.getP2()));
+            }
+            else
+                assert true;
+
         }
         return super.onTouchEvent(event);
     }
