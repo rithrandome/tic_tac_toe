@@ -7,15 +7,19 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Splash_screen extends AppCompatActivity {
     ImageView i1;
+    TextView winner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
         i1 = findViewById(R.id.imageView);
+        winner = findViewById(R.id.winner);
+
         Animation myanim = AnimationUtils.loadAnimation(this,R.anim.mytransition);
         i1.startAnimation(myanim);
 
@@ -37,4 +41,5 @@ public class Splash_screen extends AppCompatActivity {
         timer.start();
 
     }
+
 }

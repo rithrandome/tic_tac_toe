@@ -8,53 +8,50 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.annotation.Nullable;
+import java.util.Arrays;
 
 
 public class game_canvas extends View {
 
-    private static final String TAG = "";
-    private int cellWidth, cellHeight;
-    private int x,y;
+    private int cellWidth;
+    private int cellHeight;
     private String[][] board = new String[3][3];
     private boolean[][] cellChecked = new boolean[3][3];
     private Paint black_paint = new Paint();
     private Paint red_paint = new Paint();
     private Paint yellow_paint = new Paint();
+    private Paint orange_paint = new Paint();
     private Game a;
     private gameEngine ge;
+    private int touched = 0;
+
 
     public game_canvas(Context context) {
         super(context);
 
-        init(null);
+        Arrays.fill(board,null);
     }
 
     public game_canvas(Context context, AttributeSet attrs){
         super(context,attrs);
 
-        init(attrs);
+        black_paint.setColor(Color.BLACK);
+        orange_paint.setColor(Color.parseColor("#FF5722"));
+        yellow_paint.setColor(Color.YELLOW);
+        red_paint.setColor(Color.parseColor("#D83A40"));
+        yellow_paint.setStrokeWidth(15);
+        red_paint.setStrokeWidth(9);
+        black_paint.setStrokeWidth(9);
+        orange_paint.setStrokeWidth(15);
+        yellow_paint.setStyle(Paint.Style.STROKE);
     }
 
 
     public game_canvas(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context,attrs,defStyleAttr);
-
-        init(attrs);
     }
 
-    private void init(@Nullable AttributeSet set)
-    {
-
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-
-        calculateDimensions();
-    }
 
     public void setGame(Game a)
     {
@@ -67,32 +64,19 @@ public class game_canvas extends View {
     }
 
 
-    private void calculateDimensions() {
-
-        cellWidth = getWidth() / 3;
-        cellHeight = getWidth() / 3;
-
-    }
-
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //calculateDimensions();
 
-        black_paint.setColor(Color.BLACK);
-        yellow_paint.setColor(Color.YELLOW);
-        red_paint.setColor(Color.parseColor("#D83A40"));
-        yellow_paint.setStrokeWidth(15);
-        red_paint.setStrokeWidth(9);
-
-        drawGame(canvas);
         drawGrid(canvas);
-
+        drawGame(canvas);
     }
 
     public void drawGrid(Canvas canvas)
     {
+        cellWidth = getWidth() / 3;
+        cellHeight = getWidth() / 3;
+
         //vertical lines
         for (int i = 1; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -100,7 +84,7 @@ public class game_canvas extends View {
                 float startY = (j * cellHeight);
                 float stopX = (i * cellWidth);
                 float stopY = ((j + 1) * cellHeight);
-                canvas.drawLine(startX, startY, stopX, stopY, red_paint);
+                canvas.drawLine(startX, startY, stopX, stopY, black_paint);
             }
         }
         //horizontal lines
@@ -110,7 +94,7 @@ public class game_canvas extends View {
                 float startY = (i * cellHeight);
                 float stopX = ((j + 1) * cellWidth);
                 float stopY =(i * cellHeight);
-                canvas.drawLine(startX, startY, stopX, stopY, red_paint);
+                canvas.drawLine(startX, startY, stopX, stopY, black_paint);
             }
         }
     }
@@ -119,10 +103,13 @@ public class game_canvas extends View {
     {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j].equals("X"))
-                    canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
-                else if(board[i][j].equals("O"))
-                    canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);
+
+                if (board[i][j] == "X") {
+                    canvas.drawLine(i * cellWidth + 50, j * cellHeight + 50, (i + 1) * cellWidth - 50, (j + 1) * cellHeight- 50, orange_paint);
+                    canvas.drawLine((i+1)* cellWidth - 50, j * cellHeight + 50, (i) * cellWidth + 50, (j+1) * cellHeight - 50, orange_paint);
+                }
+                else if(board[i][j]== "O")
+                    canvas.drawCircle((i) * cellWidth + cellWidth/2 , (j) * cellHeight + cellHeight/2 , 125,  yellow_paint);
                 else
                     assert true;
             }
@@ -136,12 +123,22 @@ public class game_canvas extends View {
             int row = (int)(event.getY() / cellHeight);
             if(!cellChecked[column][row]) {
                 cellChecked[column][row] = true;
-                board[column][row] = ge.getP();
-
-                ge.startGame(find_cell(column,row));
+                if(touched % 2 == 0)
+                    board[column][row] = "X";
+                else
+                    board[column][row] = "O";
                 invalidate();
+                int win = ge.startGame(find_cell(column, row),touched);
 
-                a.endGame(ge.endGame(ge.getGame_list(),ge.getP1(),ge.getP2()));
+                if(win != 0)
+                    a.endGame(win);
+                if(touched == 8)
+                    if(win == 0)
+                        a.endGame(-1);
+                    else
+                        a.endGame(win);
+                ++touched;
+
             }
             else
                 assert true;
