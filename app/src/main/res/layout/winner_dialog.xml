@@ -27,7 +27,7 @@
     <Button
         android:id="@+id/btnDialog"
         android:layout_width="300dp"
-        android:layout_height="52dp"
+        android:layout_height="60dp"
         android:layout_marginStart="39dp"
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="31dp"
@@ -35,7 +35,7 @@
         android:fontFamily="@font/bungee_shade"
         android:text="NEW GAME"
         android:textColor="#4CAF50"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:backgroundTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

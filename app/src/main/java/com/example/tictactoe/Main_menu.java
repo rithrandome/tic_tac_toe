@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -57,13 +59,17 @@ public class Main_menu extends AppCompatActivity {
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Main_menu.this,Game.class);
-                i.putExtra("player1_name",e1.getText().toString());
-                i.putExtra("player2_name",e2.getText().toString());
-                startActivity(i);
-                alertDialog.dismiss();
-                finish();
-
+                if(TextUtils.isEmpty(e1.getText().toString()) || TextUtils.isEmpty(e2.getText().toString())){
+                    Toast.makeText(getApplicationContext(),"Enter Player's name !!",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent i = new Intent(Main_menu.this, Game.class);
+                    i.putExtra("player1_name", e1.getText().toString());
+                    i.putExtra("player2_name", e2.getText().toString());
+                    startActivity(i);
+                    alertDialog.dismiss();
+                    finish();
+                }
 
             }
         });
