@@ -20,12 +20,18 @@ public class Game extends AppCompatActivity {
     game_canvas g;
     private String p1, p2;
     gameEngine gameEngine;
+    MediaPlayer x_sound;
+    MediaPlayer o_sound;
+    MediaPlayer draw_sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        x_sound = MediaPlayer.create(Game.this,R.raw.x_sound);
+        o_sound = MediaPlayer.create(Game.this,R.raw.o_sound);
+        draw_sound = MediaPlayer.create(Game.this,R.raw.draw_sound);
         winner = findViewById(R.id.winner);
         Intent i = getIntent();
         p1 = i.getStringExtra("player1_name");
@@ -58,6 +64,9 @@ public class Game extends AppCompatActivity {
                 Intent i = new Intent(Game.this,Main_menu.class);
                 startActivity(i);
                 finish();
+                x_sound.stop();
+                o_sound.stop();
+                draw_sound.stop();
                 alertDialog.dismiss();
 
             }
@@ -69,29 +78,23 @@ public class Game extends AppCompatActivity {
         if(w == 1)
         {
             showAlertDialog(R.layout.winner_dialog,p1 + " is the winner !!");
-            play_sound(R.raw.x_sound);
+            x_sound.start();
 
         }
         else if(w == 2)
         {
             showAlertDialog(R.layout.winner_dialog,p2 + " is the winner !!");
-            play_sound(R.raw.o_sound);
+            o_sound.start();
 
         }
         else if(w == -1)
         {
             showAlertDialog(R.layout.winner_dialog,"It's a Draw !!");
-            play_sound(R.raw.draw_sound);
+            draw_sound.start();
         }
         else
             assert true;
     }
 
-    public void play_sound(int sound_id)
-    {
-
-        final MediaPlayer x_sound = MediaPlayer.create(Game.this,sound_id);
-        x_sound.start();
-    }
 
 }

@@ -54,8 +54,6 @@ public class Main_menu extends AppCompatActivity {
         final AlertDialog alertDialog = dialogBuilder.create();
         Objects.requireNonNull(alertDialog.getWindow()).getAttributes().windowAnimations = R.style.DialogAnimation;
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.setCancelable(false);
-        alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +65,8 @@ public class Main_menu extends AppCompatActivity {
                     Intent i = new Intent(Main_menu.this, Game.class);
                     i.putExtra("player1_name", e1.getText().toString());
                     i.putExtra("player2_name", e2.getText().toString());
-                    startActivity(i);
                     alertDialog.dismiss();
+                    startActivity(i);
                     finish();
                 }
 
@@ -91,4 +89,5 @@ public class Main_menu extends AppCompatActivity {
         if(savedInstanceState.getInt("flag") == 1)
             showAlertDialog(R.layout.player_name);
     }
+
 }
