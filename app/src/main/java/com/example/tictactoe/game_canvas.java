@@ -29,7 +29,7 @@ public class game_canvas extends View {
     public game_canvas(Context context) {
         super(context);
 
-        Arrays.fill(board,null);
+        //Arrays.fill(board,null);
 
         init(null);
     }
@@ -125,7 +125,7 @@ public class game_canvas extends View {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                if (board[i][j].equals("X") && board[i][j]!= null)
+                if (board[i][j].equals("X"))
                     canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, black_paint);
                 else if(board[i][j].equals("O"))
                     canvas.drawRect(i * cellWidth, j * cellHeight, (i + 1) * cellWidth, (j + 1) * cellHeight, red_paint);

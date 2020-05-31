@@ -10,6 +10,7 @@ import android.widget.Button;
 public class Main_menu extends AppCompatActivity {
 
     Button b1,b2;
+    Game g = new Game();
 
 
     @Override
@@ -26,6 +27,12 @@ public class Main_menu extends AppCompatActivity {
                 Intent intent = new Intent(Main_menu.this,Game.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.showAlertDialog();
             }
         });
     }
