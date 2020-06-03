@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class game_canvas extends View {
@@ -23,7 +25,7 @@ public class game_canvas extends View {
     private Paint orange_paint = new Paint();
     private Game a;
     private gameEngine ge;
-    private int touched = 0;
+    private int touched = 0, game = 0;
 
 
     public game_canvas(Context context) {
@@ -63,6 +65,12 @@ public class game_canvas extends View {
         this.ge = ge;
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        invalidate();
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -127,7 +135,9 @@ public class game_canvas extends View {
                 else
                     board[column][row] = "O";
                 invalidate();
-                int win = ge.startGame(find_cell(column, row),touched);
+
+                game = find_cell(column, row);
+                int win = ge.startGame(game,touched);
 
                 if(win != 0)
                     a.endGame(win);
@@ -176,5 +186,68 @@ public class game_canvas extends View {
        else if(c + r == 0)
            return 1;
        return 0;
+    }
+
+    public String[] getBoard() {
+        int p=0;
+        String[] board = new String[9];
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                board[p++] = this.board[i][j];
+            }
+        }
+        return board;
+    }
+
+    public void setBoard(String[] board) {
+        int p=0;
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                this.board[i][j] = board[p++];
+            }
+        }
+    }
+    public boolean[] getCellChecked() {
+        int p=0;
+        boolean[] cellChecked = new boolean[9];
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                cellChecked[p++] = this.cellChecked[i][j];
+            }
+        }
+        return cellChecked;
+    }
+
+    public void setCellChecked(boolean[] cellChecked) {
+        int p=0;
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                this.cellChecked[i][j] = cellChecked[p++];
+            }
+        }
+    }
+
+    public int getTouched() {
+        return touched;
+    }
+
+    public void setTouched(int touched) {
+        this.touched = touched;
+    }
+
+    public int getGame() {
+        return game;
+    }
+
+    public void setGame(int game) {
+        this.game = game;
     }
 }

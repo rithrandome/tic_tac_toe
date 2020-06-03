@@ -52,8 +52,8 @@ public class Main_menu extends AppCompatActivity {
 
         dialogBuilder.setView(layoutView);
         final AlertDialog alertDialog = dialogBuilder.create();
-        Objects.requireNonNull(alertDialog.getWindow()).getAttributes().windowAnimations = R.style.DialogAnimation;
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setLayout(300,200);
         alertDialog.show();
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
