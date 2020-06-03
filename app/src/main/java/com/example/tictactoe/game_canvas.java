@@ -25,7 +25,7 @@ public class game_canvas extends View {
     private Paint orange_paint = new Paint();
     private Game a;
     private gameEngine ge;
-    private int touched = 0, game = 0;
+    private int touched = 0, game = 0, win = -1;
 
 
     public game_canvas(Context context) {
@@ -137,7 +137,7 @@ public class game_canvas extends View {
                 invalidate();
 
                 game = find_cell(column, row);
-                int win = ge.startGame(game,touched);
+                win = ge.startGame(game,touched);
 
                 if(win != 0)
                     a.endGame(win);
@@ -249,5 +249,13 @@ public class game_canvas extends View {
 
     public void setGame(int game) {
         this.game = game;
+    }
+
+    public int getWin(){
+        return win;
+    }
+
+    public void setWin(int win){
+        this.win = win;
     }
 }
