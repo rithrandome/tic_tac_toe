@@ -27,7 +27,7 @@ public class gameEngine {
     private String p="X";
 
 
-    int startGame(int game, int i)
+    int startGame(int game, int i, int mode)
     {
         int win;
 

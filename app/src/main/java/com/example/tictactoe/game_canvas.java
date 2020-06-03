@@ -54,7 +54,6 @@ public class game_canvas extends View {
         super(context,attrs,defStyleAttr);
     }
 
-
     public void setGame(Game a)
     {
         this.a = a;
@@ -137,7 +136,7 @@ public class game_canvas extends View {
                 invalidate();
 
                 game = find_cell(column, row);
-                win = ge.startGame(game,touched);
+                win = ge.startGame(game,touched,a.mode);
 
                 if(win != 0)
                     a.endGame(win);

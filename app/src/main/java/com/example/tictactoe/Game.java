@@ -23,7 +23,7 @@ public class Game extends AppCompatActivity {
     MediaPlayer x_sound;
     MediaPlayer o_sound;
     MediaPlayer draw_sound;
-    int flag = 0;
+    int flag = 0,mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class Game extends AppCompatActivity {
         Intent i = getIntent();
         p1 = i.getStringExtra("player1_name");
         p2 = i.getStringExtra("player2_name");
+        mode = i.getIntExtra("mode",0);
 
         g = findViewById(R.id.grid);
         gameEngine = new gameEngine();

@@ -20,8 +20,8 @@ import java.util.Objects;
 
 public class Main_menu extends AppCompatActivity {
 
-    Button b1,b2;
-    int flag = 0;
+    Button b1,b2,s_p,d_p;
+    private int flag = 0, mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,35 @@ public class Main_menu extends AppCompatActivity {
 
         b1 = findViewById(R.id.button);
         b2 = findViewById(R.id.button2);
+        s_p = findViewById(R.id.s_player);
+        d_p = findViewById(R.id.d_player);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = 1;
+                b1.setVisibility(View.INVISIBLE);
+                b2.setVisibility(View.INVISIBLE);
+                s_p.setVisibility(View.VISIBLE);
+                d_p.setVisibility(View.VISIBLE);
+
+                s_p.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mode = 1;
+                    }
+                });
+
+                d_p.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mode = 2;
+                    }
+                });
                 showAlertDialog(R.layout.player_name);
             }
         });
+
 
     }
 
@@ -65,6 +86,7 @@ public class Main_menu extends AppCompatActivity {
                     Intent i = new Intent(Main_menu.this, Game.class);
                     i.putExtra("player1_name", e1.getText().toString());
                     i.putExtra("player2_name", e2.getText().toString());
+                    i.putExtra("mode",mode);
                     alertDialog.dismiss();
                     startActivity(i);
                     finish();
