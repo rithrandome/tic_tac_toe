@@ -9,15 +9,23 @@
         android:roundIcon="@drawable/app_icon_ttt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash_screen">
+        <activity android:name=".Splash_screen"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main_menu"></activity>
-        <activity android:name=".Game" />
+        <activity android:name=".Main_menu"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Game"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

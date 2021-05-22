@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TIC TAC TOE</string>
+    <string name="resume">resume</string>
+    <string name="go_back">GO BACK?</string>
+    <string name="back">back</string>
+    <string name="you_ll_loose_your_nprogress_are_you_nsure">you\'ll loose your\nprogress, are you\nsure?</string>
+    <string name="double_player">double player</string>
+    <string name="leaderboard">LeaderBoard</string>
 </resources>

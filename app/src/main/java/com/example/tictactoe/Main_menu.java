@@ -1,22 +1,18 @@
 package com.example.tictactoe;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.Objects;
 
 public class Main_menu extends AppCompatActivity {
 
@@ -28,33 +24,27 @@ public class Main_menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        b1 = findViewById(R.id.button);
+        b1 = findViewById(R.id.play);
         b2 = findViewById(R.id.button2);
-        s_p = findViewById(R.id.s_player);
+        //s_p = findViewById(R.id.s_player);
         d_p = findViewById(R.id.d_player);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = 1;
-                b1.setVisibility(View.INVISIBLE);
-                b2.setVisibility(View.INVISIBLE);
-                s_p.setVisibility(View.VISIBLE);
-                d_p.setVisibility(View.VISIBLE);
+                //b1.setVisibility(View.INVISIBLE);
+                //s_p.setVisibility(View.VISIBLE);
+                //d_p.setVisibility(View.INVISIBLE);
 
-                s_p.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mode = 1;
-                    }
-                });
+//                s_p.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mode = 1;
+//                    }
+//                });
 
-                d_p.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mode = 2;
-                    }
-                });
+// 
                 showAlertDialog(R.layout.player_name);
             }
         });
@@ -94,13 +84,20 @@ public class Main_menu extends AppCompatActivity {
 
             }
         });
+
+        dialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                flag = 0;
+            }
+        });
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("flag",1);
+        outState.putInt("flag",flag);
 
     }
 
@@ -109,6 +106,7 @@ public class Main_menu extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         if(savedInstanceState.getInt("flag") == 1)
+            flag = 1;
             showAlertDialog(R.layout.player_name);
     }
 
